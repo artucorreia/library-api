@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Book {
-  private Integer id;
+  private Long id;
   private String title;
   private String content;
   private LocalDateTime date;
@@ -14,7 +14,7 @@ public class Book {
   public Book() {}
 
   public Book(
-      Integer id,
+      Long id,
       String title,
       String content,
       LocalDateTime date,
@@ -28,11 +28,11 @@ public class Book {
     this.author = author;
   }
 
-  public Integer getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
