@@ -7,6 +7,8 @@ import java.util.Optional;
 public interface CategoryRepositoryGateway {
   Optional<Category> findById(Long id);
 
+  Optional<Category> findByName(String name);
+
   List<Category> findAll();
 
   void save(Category category);

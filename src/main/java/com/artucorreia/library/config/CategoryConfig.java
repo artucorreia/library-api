@@ -13,6 +13,13 @@ public class CategoryConfig {
       CategoryRepositoryJpaGateway categoryRepositoryJpaGateway) {
     return new FindCategoryByIdUseCaseImpl(categoryRepositoryJpaGateway);
   }
+
+  @Bean
+  public FindCategoryByNameUseCase findCategoryByNameUseCase(
+      CategoryRepositoryGateway categoryRepositoryGateway) {
+    return new FindCategoryByNameUseCaseImpl(categoryRepositoryGateway);
+  }
+
   @Bean
   public FindAllCategoriesUseCase findAllCategoriesUseCase(
       CategoryRepositoryGateway categoryRepositoryGateway) {

@@ -23,6 +23,12 @@ public class CategoryRepositoryJpaGateway implements CategoryRepositoryGateway {
   }
 
   @Override
+  public Optional<Category> findByName(String name) {
+    Optional<CategoryEntity> categoryEntity = categoryRepository.findByName(name);
+    return categoryEntity.map(categoryPersistenceMapper::entityToDomain);
+  }
+
+  @Override
   public List<Category> findAll() {
     List<CategoryEntity> categoryEntities = categoryRepository.findAll();
     return categoryEntities.stream().map(categoryPersistenceMapper::entityToDomain).toList();
