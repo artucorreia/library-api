@@ -7,6 +7,8 @@ import com.artucorreia.library.infra.controllers.dtos.UpdateCategoryDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface CategoryControllerMapper {
   @Mapping(source = "name", target = "name")
@@ -14,6 +16,7 @@ public interface CategoryControllerMapper {
 
   CategoryResponseDTO domainToResponseDTO(Category category);
 
-  Category updateDTOToDomain(UpdateCategoryDTO updateCategoryDTO);
+  List<CategoryResponseDTO> domainToResponseDTO(List<Category> category);
 
+  Category updateDTOToDomain(UpdateCategoryDTO updateCategoryDTO);
 }

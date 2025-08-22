@@ -24,7 +24,8 @@ public class CategoryRepositoryJpaGateway implements CategoryRepositoryGateway {
 
   @Override
   public List<Category> findAll() {
-    return List.of();
+    List<CategoryEntity> categoryEntities = categoryRepository.findAll();
+    return categoryEntities.stream().map(categoryPersistenceMapper::entityToDomain).toList();
   }
 
   @Override

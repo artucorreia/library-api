@@ -1,9 +1,6 @@
 package com.artucorreia.library.infra.controllers;
 
-import com.artucorreia.library.application.usecases.CreateCategoryUseCase;
-import com.artucorreia.library.application.usecases.DeleteCategoryByIdUseCase;
-import com.artucorreia.library.application.usecases.FindCategoryByIdUseCase;
-import com.artucorreia.library.application.usecases.UpdateCategoryUseCase;
+import com.artucorreia.library.application.usecases.*;
 import com.artucorreia.library.domain.entities.Category;
 import com.artucorreia.library.infra.controllers.constants.CategoryConstant;
 import com.artucorreia.library.infra.controllers.dtos.CategoryResponseDTO;
@@ -18,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -25,6 +23,7 @@ import java.time.LocalDateTime;
 public class CategoryController {
 
   private final FindCategoryByIdUseCase findCategoryByIdUseCase;
+  private final FindAllCategoriesUseCase findAllCategoriesUseCase;
   private final CreateCategoryUseCase createCategoryUseCase;
   private final UpdateCategoryUseCase updateCategoryUseCase;
   private final DeleteCategoryByIdUseCase deleteCategoryByIdUseCase;
@@ -42,6 +41,21 @@ public class CategoryController {
             CategoryConstant.STATUS_200,
             LocalDateTime.now(),
             categoryResponseDTO);
+    return ResponseEntity.ok(response);
+  }
+
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<ResponseDTO<List<CategoryResponseDTO>>> findAll() {
+    List<Category> categories = findAllCategoriesUseCase.execute();
+    List<CategoryResponseDTO> categoriesResponseDTO =
+        categoryControllerMapper.domainToResponseDTO(categories);
+    ResponseDTO<List<CategoryResponseDTO>> response =
+        new ResponseDTO<>(
+            true,
+            CategoryConstant.MESSAGE_200,
+            CategoryConstant.STATUS_200,
+            LocalDateTime.now(),
+            categoriesResponseDTO);
     return ResponseEntity.ok(response);
   }
 
