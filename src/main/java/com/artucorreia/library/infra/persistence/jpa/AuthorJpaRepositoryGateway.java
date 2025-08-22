@@ -15,6 +15,12 @@ public class AuthorJpaRepositoryGateway implements AuthorRepositoryGateway {
   private final AuthorPersistenceMapper authorPersistenceMapper;
 
   @Override
+  public Optional<Author> findById(Long id) {
+    Optional<AuthorEntity> authorEntity = authorRepository.findById(id);
+    return authorEntity.map(authorPersistenceMapper::entityToDomain);
+  }
+
+  @Override
   public void save(Author author) {
     AuthorEntity authorEntity = authorPersistenceMapper.domainToEntity(author);
     authorRepository.save(authorEntity);
