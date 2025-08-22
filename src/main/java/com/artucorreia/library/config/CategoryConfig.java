@@ -28,15 +28,18 @@ public class CategoryConfig {
 
   @Bean
   public CreateCategoryUseCase createCategoryUseCase(
-      CategoryRepositoryJpaGateway categoryRepositoryJpaGateway) {
-    return new CreateCategoryUseCaseImpl(categoryRepositoryJpaGateway);
+      CategoryRepositoryGateway categoryRepositoryGateway,
+      FindCategoryByNameUseCase findCategoryByNameUseCase) {
+    return new CreateCategoryUseCaseImpl(categoryRepositoryGateway, findCategoryByNameUseCase);
   }
 
   @Bean
   public UpdateCategoryUseCase updateCategoryUseCase(
-      CategoryRepositoryJpaGateway categoryRepositoryJpaGateway,
-      FindCategoryByIdUseCaseImpl findCategoryByIdUseCase) {
-    return new UpdateCategoryUseCaseImpl(categoryRepositoryJpaGateway, findCategoryByIdUseCase);
+      CategoryRepositoryGateway categoryRepositoryGateway,
+      FindCategoryByIdUseCase findCategoryByIdUseCase,
+      FindCategoryByNameUseCase findCategoryByNameUseCase) {
+    return new UpdateCategoryUseCaseImpl(
+        categoryRepositoryGateway, findCategoryByIdUseCase, findCategoryByNameUseCase);
   }
 
   @Bean

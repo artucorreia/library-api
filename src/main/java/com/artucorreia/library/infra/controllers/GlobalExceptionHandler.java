@@ -1,5 +1,6 @@
 package com.artucorreia.library.infra.controllers;
 
+import com.artucorreia.library.domain.exceptions.ResourceAlreadyExistsException;
 import com.artucorreia.library.domain.exceptions.ResourceNotFoundException;
 import com.artucorreia.library.infra.controllers.dtos.ExceptionResponse;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
-
   @ExceptionHandler(ResourceNotFoundException.class)
   public ResponseEntity<ExceptionResponse> handlerResourceNotFoundExceptions(
       Exception exception, WebRequest request) {
@@ -41,5 +41,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             .timestamp(LocalDateTime.now())
             .build(),
         HttpStatus.NOT_FOUND);
+  }
+
+  @ExceptionHandler(ResourceAlreadyExistsException.class)
+  public ResponseEntity<ExceptionResponse> handlerResourceAlreadyExistsExceptions(
+      Exception exception, WebRequest request) {
+    return new ResponseEntity<>(
+        ExceptionResponse.builder()
+            .success(false)
+            .message(exception.getMessage())
+            .code(HttpStatus.BAD_REQUEST.value())
+            .uri(request.getDescription(false))
+            .timestamp(LocalDateTime.now())
+            .build(),
+        HttpStatus.BAD_REQUEST);
   }
 }
