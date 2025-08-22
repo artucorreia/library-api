@@ -10,6 +10,7 @@ import com.artucorreia.library.infra.controllers.dtos.UpdateCategoryDTO;
 import com.artucorreia.library.infra.controllers.mapper.CategoryControllerMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -73,7 +74,7 @@ public class CategoryController {
             CategoryConstant.STATUS_201,
             LocalDateTime.now(),
             null);
-    return ResponseEntity.ok(response);
+    return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
   @PutMapping(
@@ -95,15 +96,8 @@ public class CategoryController {
   }
 
   @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<ResponseDTO<String>> deleteById(@PathVariable Long id) {
+  public ResponseEntity<Void> deleteById(@PathVariable Long id) {
     deleteCategoryByIdUseCase.execute(id);
-    ResponseDTO<String> response =
-        new ResponseDTO<>(
-            true,
-            CategoryConstant.MESSAGE_204,
-            CategoryConstant.STATUS_204,
-            LocalDateTime.now(),
-            null);
-    return ResponseEntity.ok(response);
+    return ResponseEntity.noContent().build();
   }
 }
